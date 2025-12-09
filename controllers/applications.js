@@ -67,6 +67,21 @@ router.get('/:applicationId/edit', async (req, res) => {
   }
 });
 
+router.put("/:id" , async (req , res) =>{
+  try{
+    const currentUser = await User.findById(req.session.user._id)
+  const application = currentUser.applications.id(req.params.id)
+
+  application.set(req.body);
+  await currentUser.save();
+  `/users/${currentUser._id}/applications/${req.params.applicationId}`
+  }
+  catch(error){
+    console.error(error)
+  }
+  
+})
+
 router.delete('/:id', async (req, res) => {
   try {
     const currentUser = await User.findById(req.session.user._id);
